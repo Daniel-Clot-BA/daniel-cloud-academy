@@ -1,4 +1,4 @@
-name: Build Python App
+name: Build and Greet using Python
 on: push
 jobs:
   build:
@@ -8,3 +8,11 @@ jobs:
         with:
           python-version: '3.9'
       - run: python --version
+
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: python -c "print('Hello World!')"
