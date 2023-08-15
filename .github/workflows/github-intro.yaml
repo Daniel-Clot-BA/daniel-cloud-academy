@@ -20,4 +20,4 @@ jobs:
         with:
           python-version: '3.9'
       - run:
-          python -c "print(f'the global message is: { env.GLOBAL_MESSAGE }')"
+          python -c "print(${GLOBAL_MESSAGE})"
