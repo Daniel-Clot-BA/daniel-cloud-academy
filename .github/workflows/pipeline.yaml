@@ -1,23 +1,29 @@
-name: Build and Greet using Python
+name: CDK Workshop
 on: push
-env:
-  GLOBAL_MESSAGE: 'This is Daniels message'
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - name: Install CDK CLI
+        run: |
+          npm install -g aws-cdk
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-      - run: python --version
-
-  greet:
-    runs-on: ubuntu-latest
-    env:
-      PRIVATE_MESSAGE: 'A Python is a snake'
-    steps:
-      - uses: actions/setup-python@v4
+      - name: Install Python dependencies
+        working-directory: daniel-cloud-academy
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install aws-cdk-lib
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          python-version: '3.9'
-      - run:
-          python -c "print('${GLOBAL_MESSAGE}')"
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY  }}
+          aws-region: "eu-north-1"
+      - name: CDK Synth
+        working-directory: daniel-cloud-academy
+        run: cdk synth
