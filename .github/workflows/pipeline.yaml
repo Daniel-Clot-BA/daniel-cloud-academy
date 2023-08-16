@@ -25,3 +25,5 @@ jobs:
           aws-region: "eu-north-1"
       - name: CDK Synth
         run: cdk synth
+      - name: CDK Diff
+        run: cdk diff
