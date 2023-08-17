@@ -2,6 +2,7 @@ from aws_cdk import (
     Stack,
     aws_s3 as s3,
     aws_iam as iam,
+    aws_lambda as _lambda,
 )
 from constructs import Construct
 
@@ -40,4 +41,12 @@ class DanielCloudAcademyStack(Stack):
                 resources=['*'],
                 actions=['lambda:*'],
             )
+        )
+
+        daniels_lambda = _lambda.Function(
+            self,
+            'daniels-lambda',
+            runtime=_lambda.Runtime.PYTHON_3_9,
+            code=_lambda.Code.from_asset('lambda_code'),
+            handler='hello.handler',
         )
