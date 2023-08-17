@@ -34,7 +34,7 @@ class DanielCloudAcademyStack(Stack):
         daniels_role = iam.Role(
             self,
             'daniels-role',
-            assumed_by=iam.ServicePrincipal('s3.amazonaws.com'),
+            assumed_by=iam.ServicePrincipal('lambda.amazonaws.com'),
         )
 
         daniels_role.add_to_policy(
