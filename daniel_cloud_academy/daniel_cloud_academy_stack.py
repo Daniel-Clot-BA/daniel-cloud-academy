@@ -50,12 +50,13 @@ class DanielCloudAcademyStack(Stack):
             runtime=_lambda.Runtime.PYTHON_3_9,
             code=_lambda.Code.from_asset('lambda_code'),
             handler='hello.handler',
+            role=daniels_role,
         )
 
         # make lambda get triggered when objects are created in the bucket
         daniels_bucket.add_event_notification(
             event=s3.EventType.OBJECT_CREATED_PUT,
-            dest=s3n.LambdaDestination(daniels_lambda)
+            dest=s3n.LambdaDestination(daniels_lambda),
         )
 
 
