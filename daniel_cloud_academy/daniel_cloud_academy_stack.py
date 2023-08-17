@@ -28,3 +28,16 @@ class DanielCloudAcademyStack(Stack):
                 principals=[iam.AccountRootPrincipal()],
             )
         )
+
+        daniels_role = iam.Role(
+            self,
+            'daniels-role',
+            assumed_by=iam.ServicePrincipal('s3.amazonaws.com'),
+        )
+
+        daniels_role.add_to_policy(
+            iam.PolicyStatement(
+                resources=['*'],
+                actions=['lambda:*'],
+            )
+        )
