@@ -16,4 +16,6 @@ class DanielCloudAcademyStack(Stack):
             self,
             'daniels-bucket',
             versioned=True,
+            encryption=s3.BucketEncryption.KMS,
+            bucket_key_enabled=True,
         )
