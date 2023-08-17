@@ -3,6 +3,7 @@ from aws_cdk import (
     aws_s3 as s3,
     aws_iam as iam,
     aws_lambda as _lambda,
+    aws_s3_notifications as s3n,
 )
 from constructs import Construct
 
@@ -50,3 +51,11 @@ class DanielCloudAcademyStack(Stack):
             code=_lambda.Code.from_asset('lambda_code'),
             handler='hello.handler',
         )
+
+        # make lambda get triggered when objects are created in the bucket
+        daniels_bucket.add_event_notification(
+            event=s3.EventType.OBJECT_CREATED_PUT,
+            dest=s3n.LambdaDestination(daniels_lambda)
+        )
+
+
