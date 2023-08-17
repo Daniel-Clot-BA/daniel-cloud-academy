@@ -1,6 +1,7 @@
 from aws_cdk import (
     Stack,
-    aws_s3 as s3
+    aws_s3 as s3,
+    aws_iam as iam,
 )
 from constructs import Construct
 
@@ -18,4 +19,12 @@ class DanielCloudAcademyStack(Stack):
             versioned=True,
             encryption=s3.BucketEncryption.KMS,
             bucket_key_enabled=True,
+        )
+
+        daniels_bucket.add_to_resource_policy(
+            iam.PolicyStatement(
+                actions=['s3:*'],
+                resources=[daniels_bucket.arn_for_objects('*')],
+                principals=[iam.AccountRootPrincipal()],
+            )
         )
